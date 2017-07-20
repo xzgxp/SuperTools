@@ -25,6 +25,79 @@ import java.io.*;
  * @Created on 2017-07-20 15:04:14
  */
 public class HttpClientDownloadUtil extends AbstractHttpClientUtil {
+
+    /**
+     * 执行文件下载
+     *
+     * @param remoteFileUrl
+     * @param localFilePath
+     * @param closeHttpClient
+     * @return
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
+    public static boolean executeDownloadFile(String remoteFileUrl, String localFilePath, boolean closeHttpClient) throws ClientProtocolException, IOException {
+        return executeDownloadFile(createHttpClient(), remoteFileUrl, localFilePath, closeHttpClient);
+    }
+
+    /**
+     * 执行文件下载
+     *
+     * @param httpClient      HttpClient客户端实例，传入null会自动创建一个
+     * @param remoteFileUrl   远程下载文件地址
+     * @param localFilePath   本地存储文件地址
+     * @param closeHttpClient 执行请求结束后是否关闭HttpClient客户端实例
+     * @return
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
+    public static boolean executeDownloadFile(CloseableHttpClient httpClient, String remoteFileUrl, String localFilePath, boolean closeHttpClient) throws ClientProtocolException, IOException {
+        CloseableHttpResponse response = null;
+        InputStream in = null;
+        FileOutputStream fout = null;
+        try {
+            HttpGet httpget = new HttpGet(remoteFileUrl);
+            response = httpClient.execute(httpget);
+            HttpEntity entity = response.getEntity();
+            if (entity == null) {
+                return false;
+            }
+            in = entity.getContent();
+            File file = new File(localFilePath);
+            fout = new FileOutputStream(file);
+            int l;
+            byte[] tmp = new byte[1024];
+            while ((l = in.read(tmp)) != -1) {
+                fout.write(tmp, 0, l);
+                // 注意这里如果用OutputStream.write(buff)的话，图片会失真
+            }
+            // 将文件输出到本地
+            fout.flush();
+            EntityUtils.consume(entity);
+            return true;
+        } finally {
+            // 关闭低层流。
+            if (fout != null) {
+                try {
+                    fout.close();
+                } catch (Exception e) {
+                }
+            }
+            if (response != null) {
+                try {
+                    response.close();
+                } catch (Exception e) {
+                }
+            }
+            if (closeHttpClient && httpClient != null) {
+                try {
+                    httpClient.close();
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+
     /**
      * 执行文件上传
      *
@@ -137,62 +210,5 @@ public class HttpClientDownloadUtil extends AbstractHttpClientUtil {
         }
     }
 
-    /**
-     * 执行文件下载
-     *
-     * @param httpClient      HttpClient客户端实例，传入null会自动创建一个
-     * @param remoteFileUrl   远程下载文件地址
-     * @param localFilePath   本地存储文件地址
-     * @param charset         请求编码，默认UTF-8
-     * @param closeHttpClient 执行请求结束后是否关闭HttpClient客户端实例
-     * @return
-     * @throws ClientProtocolException
-     * @throws IOException
-     */
-    public static boolean executeDownloadFile(CloseableHttpClient httpClient, String remoteFileUrl, String localFilePath, String charset, boolean closeHttpClient) throws ClientProtocolException, IOException {
-        CloseableHttpResponse response = null;
-        InputStream in = null;
-        FileOutputStream fout = null;
-        try {
-            HttpGet httpget = new HttpGet(remoteFileUrl);
-            response = httpClient.execute(httpget);
-            HttpEntity entity = response.getEntity();
-            if (entity == null) {
-                return false;
-            }
-            in = entity.getContent();
-            File file = new File(localFilePath);
-            fout = new FileOutputStream(file);
-            int l;
-            byte[] tmp = new byte[1024];
-            while ((l = in.read(tmp)) != -1) {
-                fout.write(tmp, 0, l);
-                // 注意这里如果用OutputStream.write(buff)的话，图片会失真
-            }
-            // 将文件输出到本地
-            fout.flush();
-            EntityUtils.consume(entity);
-            return true;
-        } finally {
-            // 关闭低层流。
-            if (fout != null) {
-                try {
-                    fout.close();
-                } catch (Exception e) {
-                }
-            }
-            if (response != null) {
-                try {
-                    response.close();
-                } catch (Exception e) {
-                }
-            }
-            if (closeHttpClient && httpClient != null) {
-                try {
-                    httpClient.close();
-                } catch (Exception e) {
-                }
-            }
-        }
-    }
+
 }
