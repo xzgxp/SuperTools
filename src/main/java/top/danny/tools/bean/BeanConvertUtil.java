@@ -15,12 +15,10 @@ import java.util.Set;
  * @Title: BeanConvertUtil
  * @Copyright: Copyright (c) 2016
  * @Description: bean字段赋值
- * 【说明】
- *      要拷贝字段的目标对象不可以是抽象类、接口，或者只有有参构造方法，否则在targetClass.newInstance()时会报java.lang.InstantiationException
- * 【依赖】
- *      org.springframework.spring-beans
  * @Company: lxjr.com
  * @Created on 2017-07-19 10:10:54
+ * 【说明】要拷贝字段的目标对象不可以是抽象类、接口，或者只有有参构造方法，否则在targetClass.newInstance()时会报java.lang.InstantiationException
+ * 【依赖】org.springframework.spring-beans
  */
 public class BeanConvertUtil {
 

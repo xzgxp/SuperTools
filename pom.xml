@@ -8,6 +8,18 @@
     <name>supertoolssh</name>
     <url>http://maven.apache.org</url>
 
+    <properties>
+        <springframework.version>4.1.7.RELEASE</springframework.version>
+        <netty.version>4.0.19.Final</netty.version>
+        <servlet.version>2.5</servlet.version>
+        <dubbo.version>2.4.10</dubbo.version>
+        <junit-version>4.12</junit-version>
+        <slf4j-version>1.7.6</slf4j-version>
+        <logback-version>1.0.13</logback-version>
+        <rocketmq.version>3.2.6</rocketmq.version>
+        <nexus.url>http://nexus.zhulebei.com:81/nexus/content/</nexus.url>
+    </properties>
+
     <dependencies>
         <!-- Test -->
         <dependency>
@@ -15,6 +27,20 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+        </dependency>
+
+        <!--Tools-->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <!--Encrypt-->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.55</version>
         </dependency>
 
         <!--HtmlUnit-->
@@ -48,9 +74,38 @@
             <artifactId>spring-beans</artifactId>
             <version>4.1.7.RELEASE</version>
         </dependency>
+
+        <!-- Log -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>${slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
         <finalName>supertools</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
