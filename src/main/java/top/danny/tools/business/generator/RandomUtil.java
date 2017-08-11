@@ -1,5 +1,7 @@
 package top.danny.tools.business.generator;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.text.DecimalFormat;
 import java.util.Random;
 
@@ -24,4 +26,15 @@ public class RandomUtil {
         return doubles;
     }
 
+    public static String getRandomString(int length){
+        return RandomStringUtils.randomAlphabetic(length);
+    }
+
+    public static String getRandomNumeric(int length){
+        return RandomStringUtils.randomNumeric(length);
+    }
+
+    public static String getRandomAlphanumeric(int length){
+        return RandomStringUtils.randomAlphanumeric(length);
+    }
 }

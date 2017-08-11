@@ -1,4 +1,4 @@
-package top.danny.tools.file;
+package top.danny.tools.file.image;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  * @Company: lxjr.com
  * @Created on 2017-06-13 17:49:08
  */
-public class Base64Image {
+public class Base64ImageUtil {
 
     /**
      * 示例
