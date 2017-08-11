@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
  * @Created on 2017-07-19 11:01:57
  * 【依赖】commons-lang.commons-lang
  */
-public class DateUtils extends org.apache.commons.lang.time.DateUtils {
+public class DateUtil extends org.apache.commons.lang.time.DateUtils {
 
     public final static long ONE_DAY_SECONDS = 86400;
 
