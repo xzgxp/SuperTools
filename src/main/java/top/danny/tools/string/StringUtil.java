@@ -190,6 +190,6 @@ public class StringUtil {
         BigDecimal bigDecimal = new BigDecimal(-33.1);
         String express = "max(30,#amt# * #rate#)";
 
-        System.out.println(getReplaceKeyFromExpress(express));
+        System.out.println(getReplaceKeyFromExpress(express,bigDecimal.toString(),"0.2"));
     }
 }
